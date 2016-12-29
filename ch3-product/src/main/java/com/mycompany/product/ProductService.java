@@ -22,7 +22,7 @@ public class ProductService {
 		return prodRepo.findOne(id);
 	}
 	
-	@RequestMapping("/productIds")
+	@RequestMapping("/products")
 	List<Product> getProductsForCategory(@RequestParam("id") int id) {
 		return prodRepo.findByCatId(id);
 	}
