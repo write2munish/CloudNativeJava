@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mycompany.product.dao.ProductRepository;
 import com.mycompany.product.entity.Product;
+import com.mycompany.product.exception.BadRequestException;
 
 @RestController
 public class ProductService {
@@ -22,12 +23,12 @@ public class ProductService {
 	ProductRepository prodRepo ;
 	
 	@RequestMapping(value="/product/{id}", method = RequestMethod.GET )
-	ResponseEntity<Product> getProduct(@PathVariable("id") int id) {
+	Product getProduct(@PathVariable("id") int id) {
 		Product prod = prodRepo.findOne(id);
 		if (prod == null)
-			return new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
+			throw new BadRequestException(BadRequestException.ID_NOT_FOUND, "No product for id " + id) ;
 		else
-			return new ResponseEntity<Product>(prod, HttpStatus.OK) ;
+			return prod ;
 	}
 	
 	@RequestMapping("/products")
@@ -36,14 +37,13 @@ public class ProductService {
 	}
 	
 	@RequestMapping(value="/product/{id}", method = RequestMethod.PUT)
-	ResponseEntity<Product> updateProduct(@PathVariable("id") int id, @RequestBody Product product) {
+	Product updateProduct(@PathVariable("id") int id, @RequestBody Product product) {
 		
 		// First fetch an existing product and then modify it. 
 		Product existingProduct = prodRepo.findOne(id); 
 		if (existingProduct == null) {
 			String errMsg = "Product Not found with code " + id ;
-			System.out.println(errMsg);
-			return new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
+			throw new BadRequestException(BadRequestException.ID_NOT_FOUND, errMsg);
 		}
 		
 		// Now update it back 
@@ -51,31 +51,30 @@ public class ProductService {
 		existingProduct.setName(product.getName());
 		Product savedProduct = prodRepo.save(existingProduct) ;
 		
-		// Return the updated product with status ok 
-		return new ResponseEntity<Product>(savedProduct, HttpStatus.OK);		
+		// Return the updated product  
+		return savedProduct ; 		
 	}
 	
 	@RequestMapping(value="/product", method = RequestMethod.POST)
-	ResponseEntity<Product> insertProduct(@RequestBody Product product) {
+	Product insertProduct(@RequestBody Product product) {
 		
 		Product savedProduct = prodRepo.save(product) ;
-		return new ResponseEntity<Product>(savedProduct, HttpStatus.OK);		
+		return savedProduct ;		
 	}
 	
 	
 	@RequestMapping(value="/product/{id}", method = RequestMethod.DELETE)
-	ResponseEntity<Product> deleteProduct(@PathVariable("id") int id) {
+	Product deleteProduct(@PathVariable("id") int id) {
 		
 		// First fetch an existing product and then delete it. 
 		Product existingProduct = prodRepo.findOne(id); 
 		if (existingProduct == null) {
-			String errMsg = "Product Not found with code " + id ;
-			System.out.println(errMsg);
-			return new ResponseEntity<Product>(HttpStatus.NOT_FOUND );
+			String errMsg = "Product Not found with code " + id ;			
+			throw new BadRequestException(BadRequestException.ID_NOT_FOUND, errMsg);
 		}
 		
-		// Return the inserted product with status ok
+		// Return the deleted product 
 		prodRepo.delete(existingProduct);
-		return new ResponseEntity<Product>(HttpStatus.OK);		
+		return existingProduct ;		
 	}
 }
