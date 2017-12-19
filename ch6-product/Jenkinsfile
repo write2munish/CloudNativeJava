@@ -21,6 +21,9 @@ node {
       stage('Results - Eureka Server') {
         archiveArtifacts 'target/*.jar'
       }
+      stage('Docker - Eureka Server') {
+        docker.build("cloudnativejava/eureka-server")
+      }
     }   
   }
   stage('Product API') {
@@ -36,6 +39,9 @@ node {
       stage('Results - Product API') {
         junit '**/target/surefire-reports/TEST-*.xml'
         archiveArtifacts 'target/*.jar'
+      }
+      stage('Docker - Product API') {
+        docker.build("cloudnativejava/product-api")
       }
     }
   }
