@@ -1,0 +1,10 @@
+{
+  "generator-azuresfjava": {
+    "projName": "product-app",
+    "frameworkType": "Reliable Stateless Service",
+    "author": "<your name>"
+  },
+  "generator-azuresfguest": {
+    "projName": "ProductServiceFabric"
+  }
+}
