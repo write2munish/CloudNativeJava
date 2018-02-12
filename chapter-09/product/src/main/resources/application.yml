@@ -1,7 +1,3 @@
-eureka:
-  instance:
-    leaseRenewalIntervalInSeconds: 5
-
 logging:
   level:
     org.hibernate.tool.hbm2ddl: DEBUG
