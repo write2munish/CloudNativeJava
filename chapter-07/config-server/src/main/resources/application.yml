@@ -6,4 +6,4 @@ spring:
     config:
       server:
         git:
-          uri: file:../git
+          uri: file:../..
