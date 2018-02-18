@@ -9,6 +9,5 @@
 
   <modules>
     <module>product</module>
-    <module>mycompany-product</module>
   </modules>
 </project>
