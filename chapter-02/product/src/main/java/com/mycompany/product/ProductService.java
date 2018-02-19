@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ProductService {
 
-	@RequestMapping("/${env}product/{id}")
+	@RequestMapping("/product/{id}")
 	Product getProduct(@PathVariable("id") int id) {
 		return new Product(id);
 	}
