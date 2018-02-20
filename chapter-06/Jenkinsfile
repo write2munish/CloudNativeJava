@@ -9,7 +9,7 @@ node {
     mvnHome = tool 'M3'
   }
   stage('Eureka Server') {
-    dir('eureka-server') {
+    dir('chapter-06/eureka-server') {
       stage('Build - Eureka Server') {
         // Run the maven build
         if (isUnix()) {
@@ -27,7 +27,7 @@ node {
     }   
   }
   stage('Product API') {
-    dir('ch6-product') {
+    dir('chapter-06/product') {
       stage('Build - Product API') {
         // Run the maven build
         if (isUnix()) {
