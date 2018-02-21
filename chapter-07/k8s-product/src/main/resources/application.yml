@@ -1,0 +1,4 @@
+logging:
+  level:
+    org.hibernate.tool.hbm2ddl: DEBUG
+    org.hibernate.SQL: DEBUG

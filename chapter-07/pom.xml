@@ -13,5 +13,6 @@
     <module>config-server</module>
     <module>zuul</module>
     <module>pcf-product</module>
+    <module>k8s-product</module>
   </modules>
 </project>
